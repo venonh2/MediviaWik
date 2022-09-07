@@ -1,11 +1,52 @@
-import { Image, SafeAreaView, Text, TextInput, View } from "react-native";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 import LightbrinderHelmet from "../../assets/LightbrinderHelmet.png";
 import adventurerBackpack from "../../assets/adventurerBackpack.png";
 import magnify from "../../assets/magnify.png";
-import demon from "../../assets/demon.png";
 
 import { RoundedIcon } from "../../components/RoundedIcon";
+import { FeaturedRow } from "../../components/FeaturedRow";
+
+type Props = {
+  title: string;
+  id: string;
+  items: Item[];
+};
+
+type Item = {
+  imageSrc: string;
+  name: string;
+};
+
+const ITEMS: Props[] = [
+  {
+    title: "Creatures",
+    id: "asasddsa",
+    items: [
+      { name: "Monsters", imageSrc: "http://teste" },
+      { name: "Bosses", imageSrc: "http://teste" },
+      { name: "Bosses", imageSrc: "http://teste" },
+      { name: "Bosses", imageSrc: "http://teste" },
+    ],
+  },
+  {
+    title: "Waepons",
+    id: "bdfsdf",
+    items: [{ name: "Monsters", imageSrc: "http://teste" }],
+  },
+  {
+    title: "Cities/Villages",
+    id: "asasd121dsa",
+    items: [{ name: "Bosses", imageSrc: "http://teste" }],
+  },
+];
 
 export function HomeScreen() {
   return (
@@ -46,11 +87,17 @@ export function HomeScreen() {
         </View>
 
         {/* Featured Rows */}
+
         <View className="pt-8">
-          <View className="flex-row items-center">
-            <Image source={demon} />
-            <Text className="ml-2 text-lg font-bold">Creatures</Text>
-          </View>
+          <ScrollView>
+            {ITEMS.map((item) => (
+              <FeaturedRow
+                key={item.id}
+                title={item.title}
+                items={item.items}
+              />
+            ))}
+          </ScrollView>
         </View>
       </View>
     </SafeAreaView>
