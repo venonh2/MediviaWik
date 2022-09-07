@@ -13,6 +13,9 @@ import magnify from "../../assets/magnify.png";
 
 import { RoundedIcon } from "../../components/RoundedIcon";
 import { FeaturedRow } from "../../components/FeaturedRow";
+import { useEffect } from "react";
+import { MenuService } from "../../http/menu/menuService";
+import { useFeaturedMenu } from "../../stores/useFeaturedMenu";
 
 type Props = {
   title: string;
@@ -49,10 +52,18 @@ const ITEMS: Props[] = [
 ];
 
 export function HomeScreen() {
+  const { featuredItems, setFeaturedItems } = useFeaturedMenu();
+
+  useEffect(() => {
+    MenuService.fetchFeaturedItems()
+      .then((res) => setFeaturedItems(res))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <SafeAreaView className="flex-1 pt-10 bg-white visible px-4">
       {/* Header */}
-      <View className="flex-row justify-between items-center pb-5">
+      <View className="flex-row justify-between items-center pb-4">
         <RoundedIcon
           imagePath={LightbrinderHelmet}
           bColor="16243A"
@@ -70,9 +81,9 @@ export function HomeScreen() {
           bgColor="BE8C35"
         />
       </View>
+      {/* Search */}
       <View>
-        {/* Search */}
-        <View className="flex-row items-center pb-2">
+        <View className="flex-row items-center pb-8">
           <View className="flex-row items-center flex-1 space-x-2 bg-[#F0F0F0] p-2 border-2 rounded-md border-[#5B5B5B]">
             <Image source={magnify} />
             <TextInput
@@ -85,21 +96,18 @@ export function HomeScreen() {
             />
           </View>
         </View>
-
-        {/* Featured Rows */}
-
-        <View className="pt-8">
-          <ScrollView>
-            {ITEMS.map((item) => (
-              <FeaturedRow
-                key={item.id}
-                title={item.title}
-                items={item.items}
-              />
-            ))}
-          </ScrollView>
-        </View>
       </View>
+      {/* Featured Rows */}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {featuredItems.map((item) => (
+          <FeaturedRow
+            key={item._id}
+            title={item.name}
+            imageUrl={item.imageUrl}
+            items={item.items}
+          />
+        ))}
+      </ScrollView>
     </SafeAreaView>
   );
 }

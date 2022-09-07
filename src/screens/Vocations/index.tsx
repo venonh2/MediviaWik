@@ -1,14 +1,16 @@
 import { useEffect } from "react";
-import { View, Text } from "react-native";
+import { ImageBackground, Text } from "react-native";
 
-export function VacationsScreens() {
+import image from "../../assets/as.png";
+
+export function VocationScreen() {
   useEffect(() => {
     console.log("fetch vocation details");
   }, []);
 
   return (
-    <View>
+    <ImageBackground source={image} className="flex-1">
       <Text>sasaas</Text>
-    </View>
+    </ImageBackground>
   );
 }
