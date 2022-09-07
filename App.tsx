@@ -26,7 +26,7 @@ export default function App() {
 
   return (
     <ErrorBoundary onError={errorHandler}>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
       <Navigation />
     </ErrorBoundary>
   );

@@ -14,6 +14,7 @@ export function Navigation() {
           component={HomeScreen}
           options={{
             headerShown: false,
+            navigationBarColor: "#ffffff",
           }}
         />
         <Stack.Screen
@@ -21,6 +22,9 @@ export function Navigation() {
           component={VocationScreen}
           options={{
             headerShown: false,
+            presentation: "modal",
+            animation: "simple_push",
+            navigationBarColor: "#000000",
           }}
         />
       </Stack.Navigator>

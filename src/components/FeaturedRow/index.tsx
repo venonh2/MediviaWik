@@ -1,5 +1,4 @@
 import { Image, ScrollView, Text, View } from "react-native";
-import { ChevronRightIcon } from "react-native-heroicons/outline";
 import { MenuItem } from "../../types/MenuItem";
 import { FeaturedRowCard } from "../FeaturedRowCard";
 
@@ -12,17 +11,14 @@ type Props = {
 export function FeaturedRow({ title, imageUrl, items }: Props) {
   return (
     <>
-      <View className="flex-row items-center justify-between mb-2">
-        <View className="flex-row">
-          <Image
-            className="w-6 h-6"
-            source={{
-              uri: imageUrl,
-            }}
-          />
-          <Text className="ml-2 text-lg font-bold">{title}</Text>
-        </View>
-        <ChevronRightIcon size={20} color="#5B5B5B" />
+      <View className="flex-row items-center  mb-2">
+        <Image
+          className="w-6 h-6"
+          source={{
+            uri: imageUrl,
+          }}
+        />
+        <Text className="ml-2 text-lg font-bold">{title}</Text>
       </View>
       <ScrollView
         horizontal

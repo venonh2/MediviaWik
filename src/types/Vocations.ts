@@ -2,8 +2,8 @@ import { Spell } from "./Spells";
 
 type VocatonStatics = {
   manaPoints: number;
-  lifePoints: number;
-  capabilityPoints: number;
+  healthPoints: number;
+  capacityPoints: number;
   healthRegeneration: string;
   manaRegeneration: string;
   promotionRegeneration: string;

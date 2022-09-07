@@ -2,8 +2,9 @@ export type Spell = {
   _id: string;
   name: string;
   incantation: string;
-  imageSrc: string;
+  imageUrl: string;
   magicLevel: number;
   manaCost: number;
-  premiumCost: number;
+  premium: boolean;
+  price: number;
 };
