@@ -1,9 +1,20 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { ImageBackground, Text, View, ScrollView } from "react-native";
+import {
+  ImageBackground,
+  Text,
+  View,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { MotiView } from "moti";
 
-import image from "../../assets/as.png";
+import Background from "../../assets/as.png";
+import Demon from "../../assets/demon.png";
+
 import { Vocation } from "../../types/Vocations";
+import { SpellsFilter } from "./components/SpellsFilter";
 
 const vocation: Vocation = {
   _id: "1212",
@@ -28,6 +39,36 @@ const vocation: Vocation = {
       premium: false,
       price: 30,
     },
+    {
+      _id: "2142",
+      imageUrl: "saasassa",
+      name: "Light",
+      incantation: "Ancreo Lux",
+      magicLevel: 0,
+      manaCost: 30,
+      premium: false,
+      price: 30,
+    },
+    {
+      _id: "2212",
+      imageUrl: "saasassa",
+      name: "Light",
+      incantation: "Ancreo Lux",
+      magicLevel: 0,
+      manaCost: 30,
+      premium: false,
+      price: 30,
+    },
+    {
+      _id: "27412",
+      imageUrl: "saasassa",
+      name: "Light",
+      incantation: "Ancreo Lux",
+      magicLevel: 0,
+      manaCost: 30,
+      premium: false,
+      price: 30,
+    },
   ],
 };
 
@@ -41,7 +82,7 @@ export function VocationScreen() {
   return (
     <>
       <StatusBar style="light" />
-      <ImageBackground source={image} className="flex-1">
+      <ImageBackground source={Background} className="flex-1">
         <View className="flex-1 pt-10 px-4">
           <Text className="text-cyan-500 text-3xl">{vocation.name}</Text>
           {/* Statistics per level */}
@@ -75,11 +116,34 @@ export function VocationScreen() {
           {/* Spells */}
           <Text className="text-white text-xl mb-4">Spells</Text>
           <ScrollView showsVerticalScrollIndicator={false}>
-            {vocation.spells.map((spell) => (
-              <View
-                key={spell._id}
-                className="w-full h-16 bg-[#D9D9D9] rounded opacity-60 mb-2"
-              />
+            {/* filters */}
+            <SpellsFilter
+              pressedButton={1}
+              handlePressedFilter={() => console.log("asasas")}
+            />
+            {vocation.spells.map((spell, index) => (
+              <TouchableOpacity key={spell._id}>
+                <MotiView
+                  className="h-16 w-full bg-[#D9D9D9] rounded opacity-80 mb-2 items-center flex-row"
+                  animate={{
+                    transform: [
+                      {
+                        scaleX: [
+                          0,
+                          { value: 0.5, delay: 150 * index },
+                          { value: 1, delay: 220 * index },
+                        ],
+                      },
+                    ],
+                  }}
+                >
+                  <Image source={Demon} />
+                  <View>
+                    <Text>{spell.incantation}</Text>
+                    <Text>{spell.name}</Text>
+                  </View>
+                </MotiView>
+              </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
