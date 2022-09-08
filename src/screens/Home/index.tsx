@@ -64,22 +64,18 @@ export function HomeScreen() {
     <SafeAreaView className="flex-1 pt-10 bg-white visible px-4">
       {/* Header */}
       <View className="flex-row justify-between items-center pb-4">
-        <RoundedIcon
-          imagePath={LightbrinderHelmet}
-          bColor="16243A"
-          bgColor="6E7887"
-        />
+        <RoundedIcon className="bg-gray-400">
+          <Image className="w-8 h-8" source={LightbrinderHelmet} />
+        </RoundedIcon>
         <View className="flex-1 items-start ml-2">
           <Text className="text-2xl font-bold ">Medivia Wiki</Text>
           <Text className="text-xs font-bold ">
             Discovery the Medivia secrets
           </Text>
         </View>
-        <RoundedIcon
-          imagePath={adventurerBackpack}
-          bColor="4E5166"
-          bgColor="BE8C35"
-        />
+        <RoundedIcon className="bg-yellow-600">
+          <Image className="w-8 h-8" source={adventurerBackpack} />
+        </RoundedIcon>
       </View>
       {/* Search */}
       <View>

@@ -10,7 +10,7 @@ type Props = {
 
 export const SpellsFilter = ({ pressedButton, handlePressedFilter }: Props) => {
   return (
-    <View className="flex-row mb-8 justify-between">
+    <View className="flex-row mb-6 justify-between">
       <FilterPlaceButton
         pressed={pressedButton === SpellsFilters.ML}
         onPress={() => handlePressedFilter(SpellsFilters.ML)}

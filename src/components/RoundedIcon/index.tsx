@@ -1,17 +1,16 @@
-import { Image, TouchableOpacity } from "react-native";
+import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 
-type Props = {
-  imagePath: string;
-  bColor: string;
-  bgColor: string;
+type Props = TouchableOpacityProps & {
+  children: React.ReactNode;
 };
 
-export function RoundedIcon({ bColor, bgColor, imagePath }: Props) {
+export function RoundedIcon({ children, ...rest }: Props) {
   return (
     <TouchableOpacity
-      className={`rounded-full bg-[#${bgColor}] p-1 border-2 border-[#${bColor}]`}
+      {...rest}
+      className={`rounded-full p-1 border-2 ${rest.className}`}
     >
-      <Image className="w-8 h-8" source={imagePath} />
+      {children}
     </TouchableOpacity>
   );
 }
