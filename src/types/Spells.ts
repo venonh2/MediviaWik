@@ -1,3 +1,11 @@
+export type Element = {
+  Fire;
+  Water;
+  Wind;
+  Chaos;
+  Death;
+};
+
 export type Spell = {
   _id: string;
   name: string;

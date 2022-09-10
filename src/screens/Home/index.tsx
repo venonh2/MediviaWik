@@ -14,7 +14,7 @@ import magnify from "../../assets/magnify.png";
 import { RoundedIcon } from "../../components/RoundedIcon";
 import { FeaturedRow } from "../../components/FeaturedRow";
 import { useEffect } from "react";
-import { MenuService } from "../../http/menu/menuService";
+import { MenuService } from "../../http/menuService";
 import { useFeaturedMenu } from "../../stores/useFeaturedMenu";
 
 type Props = {

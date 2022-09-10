@@ -12,6 +12,7 @@ type VocatonStatics = {
 export type Vocation = {
   _id: string;
   name: string;
+  backgroundImageUrl: string;
   description: string;
   statistics: VocatonStatics;
   spells: Spell[];

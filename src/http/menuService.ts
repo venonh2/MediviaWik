@@ -1,9 +1,9 @@
-import { FeaturedMenu } from "../../types/FeaturedMenu";
-import { requestResolver } from "../helpers/requestResolver";
-import sanityClient from "../sanityClient/sanity";
+import { FeaturedMenu } from "../types/FeaturedMenu";
+import { requestResolver } from "./helpers/requestResolver";
+import sanityClient from "./sanityClient/sanity";
 
 export const MenuService = {
-  fetchFeaturedItems: () => {
+  fetchFeaturedItems: async () => {
     return requestResolver<FeaturedMenu[]>(
       sanityClient.fetch(
         `

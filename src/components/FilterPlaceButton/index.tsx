@@ -1,18 +1,19 @@
-import { Text, TouchableOpacity } from "react-native";
-import { Gradient } from "../Gradient";
+import { Text, TouchableOpacity, TouchableOpacityProps } from "react-native";
 
-type Props = {
+type Props = TouchableOpacityProps & {
   pressed: boolean;
-  onPress: () => void;
   title: string;
 };
 
-export function FilterPlaceButton({ pressed, title, onPress }: Props) {
+export function FilterPlaceButton({ pressed, title, ...rest }: Props) {
   return (
-    <Gradient>
-      <TouchableOpacity className="bg-white p-1 rounded opacity-80">
-        <Text className="font-semibold">{title}</Text>
-      </TouchableOpacity>
-    </Gradient>
+    <TouchableOpacity
+      {...rest}
+      className={`bg-white p-2 ${pressed && "border-b-[1px] border-gray-900"}`}
+    >
+      <Text className={`font-bold text-[16px] ${!pressed && "opacity-40"}`}>
+        {title}
+      </Text>
+    </TouchableOpacity>
   );
 }

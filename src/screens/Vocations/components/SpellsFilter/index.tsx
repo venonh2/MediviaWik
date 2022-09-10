@@ -10,21 +10,21 @@ type Props = {
 
 export const SpellsFilter = ({ pressedButton, handlePressedFilter }: Props) => {
   return (
-    <View className="flex-row mb-6 justify-between">
+    <View className="flex-row justify-between bg-white border-b-[1px] border-gray-200">
       <FilterPlaceButton
         pressed={pressedButton === SpellsFilters.ML}
         onPress={() => handlePressedFilter(SpellsFilters.ML)}
         title="ML"
       />
       <FilterPlaceButton
-        pressed={pressedButton === SpellsFilters.ManaCost}
-        onPress={() => handlePressedFilter(SpellsFilters.ManaCost)}
-        title="Mana Cost"
-      />
-      <FilterPlaceButton
         pressed={pressedButton === SpellsFilters.Incantation}
         onPress={() => handlePressedFilter(SpellsFilters.Incantation)}
         title="Incantation"
+      />
+      <FilterPlaceButton
+        pressed={pressedButton === SpellsFilters.ManaCost}
+        onPress={() => handlePressedFilter(SpellsFilters.ManaCost)}
+        title="Mana Cost"
       />
       <FilterPlaceButton
         pressed={pressedButton === SpellsFilters.Price}

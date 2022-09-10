@@ -9,6 +9,10 @@ import category from "./menuItem";
 import featured from "./featured";
 import categoryType from "./itemType";
 
+// spells
+import vocation from "./vocation";
+import spell from "./spells";
+
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema
@@ -21,6 +25,8 @@ export default createSchema({
     category,
     featured,
     categoryType,
+    vocation,
+    spell,
     // When added to this list, object types can be used as
     // { type: 'typename' } in other document schemas
   ]),

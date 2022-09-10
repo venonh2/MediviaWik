@@ -13,10 +13,23 @@ type Props = {
 export function FeaturedRowCard({ name, imageUrl, itemType }: Props) {
   const navigation = useNavigation();
 
+  const navigations = {
+    weapom: "WeaponsScreen",
+    vocation: "VocationScreen",
+    city: "CitiesScreen",
+    monster: "MonstersScreen",
+  };
+
+  function handleNavigate() {
+    navigation.navigate(navigations[itemType.name], {
+      itemTypeId: itemType._id,
+    });
+  }
+
   return (
     <Gradient>
       <TouchableOpacity
-        onPress={() => navigation.navigate("VocationScreen")}
+        onPress={() => handleNavigate()}
         activeOpacity={0.4}
         className="justify-center items-center w-28 h-32 bg-[#fafafa] rounded"
       >
