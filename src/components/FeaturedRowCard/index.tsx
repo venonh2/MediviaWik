@@ -1,4 +1,4 @@
-import { Text, Image, TouchableOpacity } from "react-native";
+import { Text, Image, TouchableOpacity, View } from "react-native";
 
 import { ItemType } from "../../types/MenuItem";
 import { useNavigation } from "@react-navigation/native";
@@ -27,15 +27,17 @@ export function FeaturedRowCard({ name, imageUrl, itemType }: Props) {
   }
 
   return (
-    <Gradient>
-      <TouchableOpacity
-        onPress={() => handleNavigate()}
-        activeOpacity={0.4}
-        className="justify-center items-center w-28 h-32 bg-[#fafafa] rounded"
-      >
-        <Image source={{ uri: imageUrl }} className="mb-4 w-10 h-10" />
-        <Text className="font-bold text-sm text-center">{name}</Text>
-      </TouchableOpacity>
-    </Gradient>
+    <View className="mr-3">
+      <Gradient>
+        <TouchableOpacity
+          onPress={() => handleNavigate()}
+          activeOpacity={0.4}
+          className="justify-center items-center w-28 h-32 bg-[#fafafa] rounded"
+        >
+          <Image source={{ uri: imageUrl }} className="mb-4 w-10 h-10" />
+          <Text className="font-bold text-sm text-center">{name}</Text>
+        </TouchableOpacity>
+      </Gradient>
+    </View>
   );
 }

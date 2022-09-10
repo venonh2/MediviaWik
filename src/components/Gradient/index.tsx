@@ -27,7 +27,7 @@ export function Gradient({ children }: Props) {
 
   return (
     <LinearGradient
-      className="bg-white p-[2px] rounded mr-3"
+      className="bg-white p-[2px] rounded"
       colors={
         shouldHaveGradient
           ? GRADIENTS[Math.floor(Math.random() * 15)]

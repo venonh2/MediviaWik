@@ -58,28 +58,30 @@ export function VocationScreen() {
   //#region spells filters
 
   const OrdenedSpellsByML = useMemo(
-    () => vocation.spells.sort((a, b) => (a.price > b.price ? 1 : -1)),
+    () => vocation?.spells?.sort((a, b) => (a.price > b.price ? 1 : -1)),
     [vocation.spells]
   );
 
   const OrdenedSpellsByIncantation = useMemo(
     () =>
-      vocation.spells.sort((a, b) => (a.name.length > b.name.length ? 1 : -1)),
+      vocation?.spells?.sort((a, b) =>
+        a.name.length > b.name.length ? 1 : -1
+      ),
     [vocation.spells]
   );
 
   const OrdenedSpellsByManaCost = useMemo(
-    () => vocation.spells.sort((a, b) => (a.manaCost > b.manaCost ? 1 : -1)),
+    () => vocation?.spells?.sort((a, b) => (a.manaCost > b.manaCost ? 1 : -1)),
     [vocation.spells]
   );
 
   const OrdenedSpellsByPrice = useMemo(
-    () => vocation.spells.sort((a, b) => (a.price < b.price ? 1 : -1)),
+    () => vocation?.spells?.sort((a, b) => (a.price < b.price ? 1 : -1)),
     [vocation.spells]
   );
 
   const OrdenedSpellsByPremium = useMemo(
-    () => vocation.spells.sort((a, b) => (a.premium ? 1 : -1)),
+    () => vocation?.spells?.sort((a, b) => (a.premium ? 1 : -1)),
     [vocation.spells]
   );
 
@@ -152,14 +154,17 @@ export function VocationScreen() {
           <View className="bg-white border-b-[1px] border-gray-200 justify-center p-2">
             <Text>
               Total Spells:
-              <Text className="font-bold"> {vocation.spells.length || 0} </Text>
+              <Text className="font-bold">
+                {" "}
+                {vocation.spells?.length || 0}{" "}
+              </Text>
             </Text>
           </View>
           <ScrollView
             showsVerticalScrollIndicator={false}
             className="mb-12 divide-y divide-gray-200"
           >
-            {spellsFiltered.map((spell, index) => (
+            {vocation?.spells.map((spell, index) => (
               <TouchableOpacity
                 key={spell._id}
                 onLongPress={() => copyToClipboard(spell.incantation)}

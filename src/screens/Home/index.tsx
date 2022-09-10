@@ -13,46 +13,34 @@ import magnify from "../../assets/magnify.png";
 
 import { RoundedIcon } from "../../components/RoundedIcon";
 import { FeaturedRow } from "../../components/FeaturedRow";
-import { useEffect } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import { MenuService } from "../../http/menuService";
 import { useFeaturedMenu } from "../../stores/useFeaturedMenu";
-
-type Props = {
-  title: string;
-  id: string;
-  items: Item[];
-};
-
-type Item = {
-  imageSrc: string;
-  name: string;
-};
-
-const ITEMS: Props[] = [
-  {
-    title: "Creatures",
-    id: "asasddsa",
-    items: [
-      { name: "Monsters", imageSrc: "http://teste" },
-      { name: "Bosses", imageSrc: "http://teste" },
-      { name: "Bosses", imageSrc: "http://teste" },
-      { name: "Bosses", imageSrc: "http://teste" },
-    ],
-  },
-  {
-    title: "Waepons",
-    id: "bdfsdf",
-    items: [{ name: "Monsters", imageSrc: "http://teste" }],
-  },
-  {
-    title: "Cities/Villages",
-    id: "asasd121dsa",
-    items: [{ name: "Bosses", imageSrc: "http://teste" }],
-  },
-];
+import { MenuItem } from "../../types/MenuItem";
+import { FeaturedRowCard } from "../../components/FeaturedRowCard";
+import { MotiView } from "moti";
 
 export function HomeScreen() {
   const { featuredItems, setFeaturedItems } = useFeaturedMenu();
+  const [searchQueryValue, setSearchQueryValue] = useState<string>("");
+  const deferredQuery = useDeferredValue(searchQueryValue);
+
+  const menuItems = featuredItems.reduce<MenuItem[]>(
+    (newValue, currentValue) => {
+      const menuItem = currentValue.items;
+      return (newValue = [...newValue, ...menuItem]);
+    },
+    []
+  );
+
+  const searchedMenuItems = menuItems.filter((menuItem) => {
+    if (deferredQuery.length < 1) return;
+    const hasItem = menuItem.name
+      .trim()
+      .toLowerCase()
+      .includes(deferredQuery.trim().toLowerCase());
+    if (hasItem) return menuItem;
+  });
 
   useEffect(() => {
     MenuService.fetchFeaturedItems()
@@ -78,32 +66,66 @@ export function HomeScreen() {
         </RoundedIcon>
       </View>
       {/* Search */}
-      <View>
-        <View className="flex-row items-center pb-8">
-          <View className="flex-row items-center flex-1 space-x-2 bg-[#F0F0F0] p-2 border-2 rounded-md border-[#5B5B5B]">
-            <Image source={magnify} />
-            <TextInput
-              testID="search-home-input-id"
-              placeholder="Search for any item, city, quest or outfits"
-              keyboardType="default"
-              placeholderTextColor="#5B5B5B"
-              selectionColor="#5B5B5B"
-              maxLength={42}
-            />
-          </View>
+      <View className="flex-row items-center mb-6">
+        <View className="flex-row items-center flex-1 space-x-2 bg-[#F0F0F0] p-2 border-2 rounded-md border-[#5B5B5B]">
+          <Image source={magnify} />
+          <TextInput
+            testID="search-home-input-id"
+            placeholder="Search for any item, city, quest or outfits"
+            keyboardType="default"
+            placeholderTextColor="#5B5B5B"
+            selectionColor="#5B5B5B"
+            maxLength={42}
+            onChangeText={setSearchQueryValue}
+          />
         </View>
       </View>
-      {/* Featured Rows */}
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {featuredItems.map((item) => (
-          <FeaturedRow
-            key={item._id}
-            title={item.name}
-            imageUrl={item.imageUrl}
-            items={item.items}
-          />
-        ))}
-      </ScrollView>
+      {/* Searched Item Card */}
+      {searchedMenuItems?.length >= 1 ? (
+        <MotiView
+          from={{
+            opacity: 0,
+            scale: 0.8,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+          }}
+          exit={{
+            opacity: 0.5,
+            scale: 0.9,
+          }}
+          className="w-100 mb-4 "
+        >
+          <Text className="mb-4 font-bold ml-2 text-lg">
+            Results that we found !!
+          </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {searchedMenuItems.map((menuItem) => (
+              <FeaturedRowCard
+                key={menuItem._id}
+                name={menuItem.name}
+                imageUrl={menuItem.imageUrl}
+                itemType={menuItem.type}
+              />
+            ))}
+          </ScrollView>
+        </MotiView>
+      ) : (
+        <>
+          {/* Featured Rows */}
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {featuredItems.map((item) => (
+              <FeaturedRow
+                key={item._id}
+                title={item.name}
+                imageUrl={item.imageUrl}
+                items={item.items}
+              />
+            ))}
+          </ScrollView>
+        </>
+      )}
     </SafeAreaView>
   );
 }
