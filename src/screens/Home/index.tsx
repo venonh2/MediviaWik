@@ -13,7 +13,7 @@ import magnify from "../../assets/magnify.png";
 
 import { RoundedIcon } from "../../components/RoundedIcon";
 import { FeaturedRow } from "../../components/FeaturedRow";
-import { useDeferredValue, useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { MenuService } from "../../http/menuService";
 import { useFeaturedMenu } from "../../stores/useFeaturedMenu";
 import { MenuItem } from "../../types/MenuItem";
@@ -33,14 +33,18 @@ export function HomeScreen() {
     []
   );
 
-  const searchedMenuItems = menuItems.filter((menuItem) => {
-    if (deferredQuery.length < 1) return;
-    const hasItem = menuItem.name
-      .trim()
-      .toLowerCase()
-      .includes(deferredQuery.trim().toLowerCase());
-    if (hasItem) return menuItem;
-  });
+  const searchedMenuItems = useMemo(
+    () =>
+      menuItems.filter((menuItem) => {
+        if (deferredQuery.length < 1) return;
+        const hasItem = menuItem.name
+          .trim()
+          .toLowerCase()
+          .includes(deferredQuery.trim().toLowerCase());
+        if (hasItem) return menuItem;
+      }),
+    [deferredQuery]
+  );
 
   useEffect(() => {
     MenuService.fetchFeaturedItems()
@@ -49,7 +53,7 @@ export function HomeScreen() {
   }, []);
 
   return (
-    <SafeAreaView className="flex-1 pt-10 bg-white visible px-4">
+    <SafeAreaView className="flex-1 pt-10 bg-white visible px-4 mb-10">
       {/* Header */}
       <View className="flex-row justify-between items-center pb-4">
         <RoundedIcon className="bg-gray-400">
