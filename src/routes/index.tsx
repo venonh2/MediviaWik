@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HomeScreen } from "../screens/Home";
 import { VocationScreen } from "../screens/Vocations";
 import { CityScreen } from "../screens/City";
+import { CitiesScreen } from "../screens/Cities";
+import { Header } from "../components/Header";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,8 +16,8 @@ export function Navigation() {
           name="Home"
           component={HomeScreen}
           options={{
-            headerShown: false,
             navigationBarColor: "#ffffff",
+            header: () => <Header />,
           }}
         />
         <Stack.Screen
@@ -35,7 +37,15 @@ export function Navigation() {
             headerShown: false,
             presentation: "modal",
             animation: "simple_push",
-            navigationBarColor: "#000000",
+          }}
+        />
+        <Stack.Screen
+          name="CitiesScreen"
+          component={CitiesScreen}
+          options={{
+            presentation: "modal",
+            animation: "simple_push",
+            header: () => <Header />,
           }}
         />
       </Stack.Navigator>

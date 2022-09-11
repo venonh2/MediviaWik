@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   ToastAndroid,
 } from "react-native";
-import { MotiView } from "moti";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as Clipboard from "expo-clipboard";
 
@@ -22,31 +21,45 @@ import { SpellsFilters } from "../../shared/enums/SpellsFilters";
 import { VocationService } from "../../http/vocations";
 import { useVocation } from "../../stores/useVocation";
 import { SharedRouteParam } from "../../global/navigation";
+import { OpacityEffectView } from "../../components/OpacityEffectView";
 
 type ParamList = {
-  VocationScreen: SharedRouteParam;
+  VocationScreen: SharedRouteParam & {
+    name: string;
+  };
 };
 
 type ScreenRouteProp = RouteProp<ParamList, "VocationScreen">;
 
+enum RequestStatus {
+  Fetching,
+  Error,
+  Success,
+}
+
 export function VocationScreen() {
   const { params } = useRoute<ScreenRouteProp>();
-  const [pressedFilter, setPressedFilter] = useState(SpellsFilters.ML);
   const { vocation, setVocationDetails } = useVocation();
 
+  const [pressedFilter, setPressedFilter] = useState(SpellsFilters.ML);
+  const [requestStatus, setRequestStatus] = useState(RequestStatus.Fetching);
+
   useEffect(() => {
-    VocationService.getVocationDetails(params.itemTypeId)
+    VocationService.getVocationDetails(params.itemTypeId, params.name)
       .then((res) => {
+        setRequestStatus(RequestStatus.Success);
         setVocationDetails(res);
       })
       .catch((err) => {
-        console.log(err);
+        setRequestStatus(RequestStatus.Error);
       });
   }, []);
 
   const { statistics } = vocation;
 
-  const copyToClipboard = async (text: string) => {
+  //#region handlers
+
+  const handleCopyToClipboard = async (text: string) => {
     await Clipboard.setStringAsync(text).then(() => {
       ToastAndroid.show("Incantation copied", ToastAndroid.SHORT);
     });
@@ -54,6 +67,8 @@ export function VocationScreen() {
 
   const handlePressedFilter = (filter: SpellsFilters) =>
     setPressedFilter(filter === pressedFilter ? -1 : filter);
+
+  //#endregion handlers
 
   //#region spells filters
 
@@ -102,6 +117,12 @@ export function VocationScreen() {
     }
   }, [vocation.spells, pressedFilter]);
   //#endregion filters
+  if (requestStatus === RequestStatus.Fetching)
+    return (
+      <View>
+        <Text>loading...</Text>
+      </View>
+    );
 
   return (
     <>
@@ -164,23 +185,11 @@ export function VocationScreen() {
             showsVerticalScrollIndicator={false}
             className="mb-12 divide-y divide-gray-200"
           >
-            {vocation?.spells.map((spell, index) => (
-              <TouchableOpacity
-                key={spell._id}
-                onLongPress={() => copyToClipboard(spell.incantation)}
-              >
-                <MotiView
+            {spellsFiltered.map((spell, index) => (
+              <OpacityEffectView key={spell._id} delay={index * 600}>
+                <TouchableOpacity
+                  onLongPress={() => handleCopyToClipboard(spell.incantation)}
                   className="h-20 w-full bg-white flex-row"
-                  from={{
-                    opacity: 0,
-                  }}
-                  animate={{
-                    opacity: 1,
-                  }}
-                  transition={{
-                    type: "timing",
-                    duration: index === 0 ? 600 : index * 600,
-                  }}
                 >
                   <Image
                     className="w-20 h-20"
@@ -216,8 +225,8 @@ export function VocationScreen() {
                       </View>
                     </View>
                   </View>
-                </MotiView>
-              </TouchableOpacity>
+                </TouchableOpacity>
+              </OpacityEffectView>
             ))}
           </ScrollView>
         </View>

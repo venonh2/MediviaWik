@@ -1,4 +1,7 @@
 import { Image, ScrollView, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { ChevronDoubleRightIcon } from "react-native-heroicons/outline";
+
 import { MenuItem } from "../../types/MenuItem";
 import { FeaturedRowCard } from "../FeaturedRowCard";
 
@@ -9,16 +12,34 @@ type Props = {
 };
 
 export function FeaturedRow({ title, imageUrl, items }: Props) {
+  const navigation = useNavigation();
+  const hasListScreen = title.trim().toLowerCase().includes("cities");
+
   return (
     <>
-      <View className="flex-row items-center  mb-2">
+      <View className="flex-row items-center mb-2">
         <Image
           className="w-6 h-6"
           source={{
             uri: imageUrl,
           }}
         />
-        <Text className="ml-2 text-lg font-bold">{title}</Text>
+        <Text
+          onPress={() =>
+            hasListScreen ? navigation.navigate("CitiesScreen") : null
+          }
+          className="ml-2 text-lg font-bold"
+        >
+          {title}
+        </Text>
+        {hasListScreen && (
+          <ChevronDoubleRightIcon
+            onPress={() => navigation.navigate("CitiesScreen")}
+            style={{ marginLeft: "auto" }}
+            size={20}
+            color="#5B5B5B"
+          />
+        )}
       </View>
       <ScrollView
         horizontal

@@ -1,5 +1,6 @@
 import create from "zustand";
 import { FeaturedMenu } from "../types/FeaturedMenu";
+import { MenuItem } from "../types/MenuItem";
 
 type FeaturedMenuStore = {
   featuredItems: FeaturedMenu[];
@@ -13,3 +14,10 @@ export const useFeaturedMenu = create<FeaturedMenuStore>((set) => ({
       featuredItems: [...state.featuredItems, ...featuredMenus],
     })),
 }));
+
+export function filterMenuItems(featuredItems: FeaturedMenu[]) {
+  return featuredItems.reduce<MenuItem[]>((newValue, currentValue) => {
+    const menuItem = currentValue.items;
+    return (newValue = [...newValue, ...menuItem]);
+  }, []);
+}

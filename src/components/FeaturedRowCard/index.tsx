@@ -16,13 +16,14 @@ export function FeaturedRowCard({ name, imageUrl, itemType }: Props) {
   const navigations = {
     weapom: "WeaponsScreen",
     vocation: "VocationScreen",
-    city: "CitiesScreen",
+    city: "CityScreen",
     monster: "MonstersScreen",
   };
 
   function handleNavigate() {
     navigation.navigate(navigations[itemType.name], {
       itemTypeId: itemType._id,
+      name: name,
     });
   }
 
@@ -35,7 +36,12 @@ export function FeaturedRowCard({ name, imageUrl, itemType }: Props) {
           className="justify-center items-center w-28 h-32 bg-[#fafafa] rounded"
         >
           <Image source={{ uri: imageUrl }} className="mb-4 w-10 h-10" />
-          <Text className="font-bold text-sm text-center">{name}</Text>
+          <Text
+            className="font-bold text-sm text-center"
+            allowFontScaling={false}
+          >
+            {name}
+          </Text>
         </TouchableOpacity>
       </Gradient>
     </View>

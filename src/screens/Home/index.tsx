@@ -7,44 +7,40 @@ import {
   View,
 } from "react-native";
 
-import LightbrinderHelmet from "../../assets/LightbrinderHelmet.png";
-import adventurerBackpack from "../../assets/adventurerBackpack.png";
 import magnify from "../../assets/magnify.png";
 
-import { RoundedIcon } from "../../components/RoundedIcon";
 import { FeaturedRow } from "../../components/FeaturedRow";
-import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { MenuService } from "../../http/menuService";
-import { useFeaturedMenu } from "../../stores/useFeaturedMenu";
-import { MenuItem } from "../../types/MenuItem";
+import { filterMenuItems, useFeaturedMenu } from "../../stores/useFeaturedMenu";
 import { FeaturedRowCard } from "../../components/FeaturedRowCard";
 import { MotiView } from "moti";
 
 export function HomeScreen() {
   const { featuredItems, setFeaturedItems } = useFeaturedMenu();
   const [searchQueryValue, setSearchQueryValue] = useState<string>("");
-  const deferredQuery = useDeferredValue(searchQueryValue);
+  const [, startTransition] = useTransition();
 
-  const menuItems = featuredItems.reduce<MenuItem[]>(
-    (newValue, currentValue) => {
-      const menuItem = currentValue.items;
-      return (newValue = [...newValue, ...menuItem]);
-    },
-    []
-  );
+  const menuItems = filterMenuItems(featuredItems);
 
-  const searchedMenuItems = useMemo(
+  const filteredMenuItems = useMemo(
     () =>
       menuItems.filter((menuItem) => {
-        if (deferredQuery.length < 1) return;
+        if (searchQueryValue.length < 1) return;
         const hasItem = menuItem.name
           .trim()
           .toLowerCase()
-          .includes(deferredQuery.trim().toLowerCase());
+          .includes(searchQueryValue.trim().toLowerCase());
         if (hasItem) return menuItem;
       }),
-    [deferredQuery]
+    [searchQueryValue]
   );
+
+  function updateFilterHandler(value: string) {
+    startTransition(() => {
+      setSearchQueryValue(value);
+    });
+  }
 
   useEffect(() => {
     MenuService.fetchFeaturedItems()
@@ -53,22 +49,7 @@ export function HomeScreen() {
   }, []);
 
   return (
-    <SafeAreaView className="flex-1 pt-10 bg-white visible px-4 mb-10">
-      {/* Header */}
-      <View className="flex-row justify-between items-center pb-4">
-        <RoundedIcon className="bg-gray-400">
-          <Image className="w-8 h-8" source={LightbrinderHelmet} />
-        </RoundedIcon>
-        <View className="flex-1 items-start ml-2">
-          <Text className="text-2xl font-bold ">Medivia Wiki</Text>
-          <Text className="text-xs font-bold ">
-            Discovery the Medivia secrets
-          </Text>
-        </View>
-        <RoundedIcon className="bg-yellow-600">
-          <Image className="w-8 h-8" source={adventurerBackpack} />
-        </RoundedIcon>
-      </View>
+    <SafeAreaView className="flex-1 bg-white visible px-4">
       {/* Search */}
       <View className="flex-row items-center mb-6">
         <View className="flex-row items-center flex-1 space-x-2 bg-[#F0F0F0] p-2 border-2 rounded-md border-[#5B5B5B]">
@@ -80,12 +61,14 @@ export function HomeScreen() {
             placeholderTextColor="#5B5B5B"
             selectionColor="#5B5B5B"
             maxLength={42}
-            onChangeText={setSearchQueryValue}
+            onChangeText={updateFilterHandler}
+            keyboardAppearance="dark"
+            allowFontScaling={false}
           />
         </View>
       </View>
       {/* Searched Item Card */}
-      {searchedMenuItems?.length >= 1 ? (
+      {filteredMenuItems?.length >= 1 ? (
         <MotiView
           from={{
             opacity: 0,
@@ -99,13 +82,17 @@ export function HomeScreen() {
             opacity: 0.5,
             scale: 0.9,
           }}
-          className="w-100 mb-4 "
+          className="w-100 mb-4"
         >
           <Text className="mb-4 font-bold ml-2 text-lg">
             Results that we found !!
           </Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {searchedMenuItems.map((menuItem) => (
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
+            {filteredMenuItems.map((menuItem) => (
               <FeaturedRowCard
                 key={menuItem._id}
                 name={menuItem.name}

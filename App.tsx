@@ -9,9 +9,10 @@ import {
 
 import { Navigation } from "./src/routes";
 import { View } from "react-native";
+import { CustomFallback } from "./src/components/CustomFallback";
 
 const errorHandler = (error: Error, stackTrace: string) => {
-  console.log(error, stackTrace);
+  // [] sentry
 };
 
 export default function App() {
@@ -25,7 +26,7 @@ export default function App() {
   }
 
   return (
-    <ErrorBoundary onError={errorHandler}>
+    <ErrorBoundary FallbackComponent={CustomFallback} onError={errorHandler}>
       <StatusBar style="dark" />
       <Navigation />
     </ErrorBoundary>

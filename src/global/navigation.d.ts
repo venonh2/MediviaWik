@@ -7,9 +7,14 @@ export type SharedRouteParam = {
 export declare global {
   namespace ReactNavigation {
     interface RootParamList extends RootStackParamList {
-      VocationScreen: SharedRouteParam;
+      VocationScreen: SharedRouteParam & {
+        name: string;
+      };
       WeaponsScreen: SharedRouteParam;
       CitiesScreen: SharedRouteParam;
+      CityScreen: SharedRouteParam & {
+        name: string;
+      };
       MonstersScreen: SharedRouteParam;
     }
   }

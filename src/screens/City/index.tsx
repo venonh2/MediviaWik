@@ -7,78 +7,42 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 
 import cityImage from "../../assets/cityImage.png";
 import { RoundedIcon } from "../../components/RoundedIcon";
 
 import Scroll from "../../assets/Scroll.png";
 import Npcs from "../../assets/Npcs.png";
+import { MotiView } from "moti";
+import { useEffect } from "react";
+import { CitiesService } from "../../http/citiesService";
+import { SharedRouteParam } from "../../global/navigation";
+import { useCities } from "../../stores/useCities";
 
-type Npc = {
-  _id: string;
-  name: string;
-  imageUrl: string;
-  occupation: string;
+type ParamList = {
+  CityScreen: SharedRouteParam & {
+    name: string;
+  };
 };
 
-type City = {
-  _id: string;
-  name: string;
-  description: string;
-  npcs: Npc[];
-};
-
-const city: City = {
-  _id: "323224",
-  description: `Dynahall is a small community to the east of Eschen. It is surrounded by a river to the south and west and the Mittenhoff mountain range to the east. It's very quiet and safe at the surface with only a small number of lesser creatures inhabiting the surrounding area. You can sail there by boat from the Eschen lighthouse after completing mission 5 of the Imperial Faction. The town is also home to an underground hideout of renegades.`,
-  name: "Thoris",
-  npcs: [
-    {
-      _id: "233424",
-      occupation: "Mage Spell Teacher",
-      imageUrl: "http://teste.jpg",
-      name: "Jakob",
-    },
-    {
-      _id: "5232323",
-      occupation: "Mage Spell Teacher",
-      imageUrl: "http://teste.jpg",
-      name: "Jakob",
-    },
-    {
-      _id: "4343",
-      occupation: "Mage Spell Teacher",
-      imageUrl: "http://teste.jpg",
-      name: "Jakob",
-    },
-    {
-      _id: "4343453",
-      occupation: "Mage Spell Teacher",
-      imageUrl: "http://teste.jpg",
-      name: "Jakob",
-    },
-    {
-      _id: "333232",
-      occupation: "Mage Spell Teacher",
-      imageUrl: "http://teste.jpg",
-      name: "Jakob",
-    },
-    {
-      _id: "334343",
-      occupation: "Mage Spell Teacher",
-      imageUrl: "http://teste.jpg",
-      name: "Jakob",
-    },
-    {
-      _id: "12212",
-      occupation: "Mage Spell Teacher",
-      imageUrl: "http://teste.jpg",
-      name: "Jakob",
-    },
-  ],
-};
+type ScreenRouteProp = RouteProp<ParamList, "CityScreen">;
 
 export function CityScreen() {
+  const { params } = useRoute<ScreenRouteProp>();
+
+  const { city, setCity } = useCities();
+
+  useEffect(() => {
+    CitiesService.getCityDetails(params.name)
+      .then((city) => {
+        setCity(city);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  }, []);
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <StatusBar style="light" translucent />
@@ -102,16 +66,37 @@ export function CityScreen() {
           className="divide-y divide-gray-200"
           showsVerticalScrollIndicator={false}
         >
-          {city.npcs.map((item) => (
-            <View className="h-16 flex-row items-center">
-              <Image source={Scroll} className="h-16 w-16" />
-              <TouchableOpacity key={item._id}>
-                <Text className="font-bold text-lg">{item.name}</Text>
-                <Text className="font-bold text-xs opacity-60">
-                  {item.name}
-                </Text>
-              </TouchableOpacity>
-            </View>
+          {!city?.npcs && (
+            <Text className="font-bold opacity-60 text-lg text-center">
+              looks like that
+              <Text className="font-semibold"> {city.name} </Text>
+              has no citizens
+            </Text>
+          )}
+          {city?.npcs?.map((npc, index) => (
+            <TouchableOpacity key={npc._id}>
+              <MotiView
+                from={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                transition={{
+                  type: "timing",
+                  duration: index === 0 ? 600 : index * 600,
+                }}
+                className="h-16 flex-row items-center"
+              >
+                <Image source={{ uri: npc.imageUrl }} className="h-16 w-16" />
+                <View>
+                  <Text className="font-bold text-lg">{npc.name}</Text>
+                  <Text className="font-bold text-xs opacity-60">
+                    {npc.name}
+                  </Text>
+                </View>
+              </MotiView>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </View>

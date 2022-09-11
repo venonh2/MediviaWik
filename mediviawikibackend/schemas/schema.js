@@ -12,6 +12,8 @@ import categoryType from "./itemType";
 // spells
 import vocation from "./vocation";
 import spell from "./spells";
+import city from "./city";
+import npc from "./npc";
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -27,6 +29,8 @@ export default createSchema({
     categoryType,
     vocation,
     spell,
+    city,
+    npc,
     // When added to this list, object types can be used as
     // { type: 'typename' } in other document schemas
   ]),
