@@ -16,6 +16,7 @@ export function Navigation() {
           name="Home"
           component={HomeScreen}
           options={{
+            orientation: "portrait",
             navigationBarColor: "#ffffff",
             header: () => <Header />,
           }}
@@ -24,6 +25,7 @@ export function Navigation() {
           name="VocationScreen"
           component={VocationScreen}
           options={{
+            orientation: "portrait",
             headerShown: false,
             presentation: "modal",
             animation: "simple_push",
@@ -35,6 +37,7 @@ export function Navigation() {
           component={CityScreen}
           options={{
             headerShown: false,
+            orientation: "portrait",
             presentation: "modal",
             animation: "simple_push",
           }}
@@ -43,6 +46,7 @@ export function Navigation() {
           name="CitiesScreen"
           component={CitiesScreen}
           options={{
+            orientation: "portrait",
             presentation: "modal",
             animation: "simple_push",
             header: () => <Header />,

@@ -67,9 +67,9 @@ export function CityScreen() {
           showsVerticalScrollIndicator={false}
         >
           {!city?.npcs && (
-            <Text className="font-bold opacity-60 text-lg text-center">
+            <Text className="text-lg text-center">
               looks like that
-              <Text className="font-semibold"> {city.name} </Text>
+              <Text className="font-bold"> {city.name} </Text>
               has no citizens
             </Text>
           )}
@@ -92,7 +92,7 @@ export function CityScreen() {
                 <View>
                   <Text className="font-bold text-lg">{npc.name}</Text>
                   <Text className="font-bold text-xs opacity-60">
-                    {npc.name}
+                    {npc.occupation}
                   </Text>
                 </View>
               </MotiView>

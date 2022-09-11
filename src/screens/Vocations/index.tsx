@@ -46,9 +46,9 @@ export function VocationScreen() {
 
   useEffect(() => {
     VocationService.getVocationDetails(params.itemTypeId, params.name)
-      .then((res) => {
+      .then((details) => {
         setRequestStatus(RequestStatus.Success);
-        setVocationDetails(res);
+        setVocationDetails(details);
       })
       .catch((err) => {
         setRequestStatus(RequestStatus.Error);
@@ -56,6 +56,8 @@ export function VocationScreen() {
   }, []);
 
   const { statistics } = vocation;
+
+  console.log(statistics);
 
   //#region handlers
 
@@ -117,6 +119,7 @@ export function VocationScreen() {
     }
   }, [vocation.spells, pressedFilter]);
   //#endregion filters
+
   if (requestStatus === RequestStatus.Fetching)
     return (
       <View>
@@ -143,19 +146,19 @@ export function VocationScreen() {
                 Each level up {vocation.name} gains:
               </Text>
               <Text className="text-sm font-bold text-white">
-                * {statistics.healthPoints} health points
+                * {statistics?.healthPoints} health points
               </Text>
               <Text className="text-sm font-bold text-white">
-                * {statistics.manaPoints} mana points
+                * {statistics?.manaPoints} mana points
               </Text>
               <Text className="text-sm font-bold text-white">
-                * {statistics.capacityPoints} oz. capability
+                * {statistics?.capacityPoints} oz. capability
               </Text>
             </View>
             {/* Regen Statistics */}
             <View className="mb-2">
               <Text className="text-sm font-bold text-white">
-                {statistics.healthRegeneration}
+                {statistics?.healthRegeneration}
               </Text>
               <Text className="text-sm font-bold text-white">
                 {statistics.manaRegeneration}
