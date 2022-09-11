@@ -102,7 +102,7 @@ export function VocationScreen() {
     [vocation.spells]
   );
 
-  const spellsFiltered = useMemo(() => {
+  const filteredSpells = useMemo(() => {
     switch (pressedFilter) {
       case SpellsFilters.ML:
         return OrdenedSpellsByML;
@@ -161,10 +161,10 @@ export function VocationScreen() {
                 {statistics?.healthRegeneration}
               </Text>
               <Text className="text-sm font-bold text-white">
-                {statistics.manaRegeneration}
+                {statistics?.manaRegeneration}
               </Text>
               <Text className="text-sm font-bold text-white">
-                {statistics.promotionRegeneration}
+                {statistics?.promotionRegeneration}
               </Text>
             </View>
             <Text className="text-xl mb-2 font-bold text-white">Spells</Text>
@@ -188,7 +188,7 @@ export function VocationScreen() {
             showsVerticalScrollIndicator={false}
             className="mb-12 divide-y divide-gray-200"
           >
-            {spellsFiltered.map((spell, index) => (
+            {filteredSpells?.map((spell, index) => (
               <OpacityEffectView key={spell._id} delay={index * 600}>
                 <TouchableOpacity
                   onLongPress={() => handleCopyToClipboard(spell.incantation)}

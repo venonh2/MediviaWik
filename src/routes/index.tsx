@@ -5,6 +5,8 @@ import { VocationScreen } from "../screens/Vocations";
 import { CityScreen } from "../screens/City";
 import { CitiesScreen } from "../screens/Cities";
 import { Header } from "../components/Header";
+import { WeaponsScreen } from "../screens/Weapons";
+import { MonstersScreen } from "../screens/Monsters";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +52,26 @@ export function Navigation() {
             presentation: "modal",
             animation: "simple_push",
             header: () => <Header />,
+          }}
+        />
+        <Stack.Screen
+          name="WeaponsScreen"
+          component={WeaponsScreen}
+          options={{
+            headerShown: false,
+            orientation: "portrait",
+            presentation: "modal",
+            animation: "simple_push",
+          }}
+        />
+        <Stack.Screen
+          name="MonstersScreen"
+          component={MonstersScreen}
+          options={{
+            headerShown: false,
+            orientation: "portrait",
+            presentation: "modal",
+            animation: "simple_push",
           }}
         />
       </Stack.Navigator>
