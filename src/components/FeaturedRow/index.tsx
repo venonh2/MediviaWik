@@ -35,6 +35,12 @@ export function FeaturedRow({ title, imageUrl, items }: Props) {
         {hasListScreen && (
           <ChevronDoubleRightIcon
             onPress={() => navigation.navigate("CitiesScreen")}
+            hitSlop={{
+              bottom: 26,
+              left: 26,
+              right: 26,
+              top: 26,
+            }}
             style={{ marginLeft: "auto" }}
             size={20}
             color="#5B5B5B"
