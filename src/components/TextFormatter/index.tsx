@@ -22,9 +22,11 @@ export function TextFormatter({
   dots = false,
   ...rest
 }: Props) {
+  if (text.length < 1) return null;
+
   return (
     <Text {...rest} className={`${rest.className}`}>
-      {text.slice(0, cutTextAt)} {dots && "..."}
+      {text.slice(0, cutTextAt).concat(dots ? "..." : "")}
     </Text>
   );
 }

@@ -10,7 +10,9 @@ type Props = ViewProps & {
 };
 
 export function OpacityEffectView({ delay = 600, children, ...rest }: Props) {
-  if (delay < 0) throw new Error("delay invalid: " + delay);
+  if (delay <= 0) return null;
+
+  if (!children) return null;
 
   return (
     <MotiView

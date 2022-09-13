@@ -58,3 +58,7 @@ dist/
 # Sanity
 /src/http/sanity/sanity.js
 /mediviawikibackend/sanity.json
+
+
+#tests
+/coverage
