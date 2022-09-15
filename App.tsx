@@ -10,6 +10,7 @@ import {
 import { Navigation } from "./src/routes";
 import { View } from "react-native";
 import { CustomFallback } from "./src/components/CustomFallback";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const errorHandler = (error: Error, stackTrace: string) => {
   // [] sentry
@@ -27,8 +28,10 @@ export default function App() {
 
   return (
     <ErrorBoundary FallbackComponent={CustomFallback} onError={errorHandler}>
-      <StatusBar style="dark" />
-      <Navigation />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <StatusBar style="dark" />
+        <Navigation />
+      </GestureHandlerRootView>
     </ErrorBoundary>
   );
 }
