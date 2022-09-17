@@ -88,7 +88,11 @@ export function CityScreen() {
                 }}
                 className="h-16 flex-row items-center"
               >
-                <Image source={{ uri: npc.imageUrl }} className="h-16 w-16" />
+                <Image
+                  source={{ uri: npc.imageUrl }}
+                  className="h-16 w-16"
+                  resizeMode="contain"
+                />
                 <View>
                   <Text className="font-bold text-lg">{npc.name}</Text>
                   <Text className="font-bold text-xs opacity-60">

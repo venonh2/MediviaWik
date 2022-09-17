@@ -28,7 +28,7 @@ export function FeaturedRowCard({ name, imageUrl, itemType }: Props) {
     weapom: "WeaponsScreen",
     vocation: "VocationScreen",
     city: "CityScreen",
-    monster: "MonstersScreen",
+    monster: "CreaturesScreen",
   };
 
   function handleNavigate() {

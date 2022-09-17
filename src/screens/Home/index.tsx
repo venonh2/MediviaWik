@@ -1,13 +1,4 @@
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-
-import magnify from "../../assets/magnify.png";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 
 import { FeaturedRow } from "../../components/FeaturedRow";
 import { useEffect, useMemo, useState, useTransition } from "react";
@@ -15,6 +6,7 @@ import { MenuService } from "../../http/menuService";
 import { filterMenuItems, useFeaturedMenu } from "../../stores/useFeaturedMenu";
 import { FeaturedRowCard } from "../../components/FeaturedRowCard";
 import { MotiView } from "moti";
+import { Search } from "../../components/Search";
 
 export function HomeScreen() {
   const { featuredItems, setFeaturedItems } = useFeaturedMenu();
@@ -51,22 +43,10 @@ export function HomeScreen() {
   return (
     <SafeAreaView className="flex-1 bg-white visible px-4">
       {/* Search */}
-      <View className="flex-row items-center mb-6">
-        <View className="flex-row items-center flex-1 space-x-2 bg-[#F0F0F0] p-2 border-2 rounded-md border-[#5B5B5B]">
-          <Image source={magnify} />
-          <TextInput
-            testID="search-home-input-id"
-            placeholder="Search for any item, city, quest or outfits"
-            keyboardType="default"
-            placeholderTextColor="#5B5B5B"
-            selectionColor="#5B5B5B"
-            maxLength={42}
-            onChangeText={updateFilterHandler}
-            keyboardAppearance="dark"
-            allowFontScaling={false}
-          />
-        </View>
-      </View>
+      <Search
+        placeholder="Search for any item, city, quest or outfits"
+        onChangeText={updateFilterHandler}
+      />
       {/* Searched Item Card */}
       {filteredMenuItems?.length >= 1 ? (
         <MotiView

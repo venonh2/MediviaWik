@@ -14,6 +14,8 @@ import vocation from "./vocation";
 import spell from "./spells";
 import city from "./city";
 import npc from "./npc";
+import creature from "./creature";
+import creatureType from "./creatureType";
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -31,6 +33,8 @@ export default createSchema({
     spell,
     city,
     npc,
+    creature,
+    creatureType,
     // When added to this list, object types can be used as
     // { type: 'typename' } in other document schemas
   ]),

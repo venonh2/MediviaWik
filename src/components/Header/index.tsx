@@ -11,10 +11,12 @@ import adventurerBackpack from "../../assets/adventurerBackpack.png";
 
 import { RoundedIcon } from "../../components/RoundedIcon";
 import { Path, Svg } from "react-native-svg";
+import { useColorScheme } from "nativewind";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 export function Header() {
+  const { colorScheme, toggleColorScheme } = useColorScheme();
   const { width } = useWindowDimensions();
 
   const widhBackgroundAnimated = useSharedValue(0);
@@ -39,22 +41,22 @@ export function Header() {
   }
 
   return (
-    <Svg onPress={handleBottomClick} width={width} viewBox={`0 0 ${width} 45`}>
-      <AnimatedPath animatedProps={backgroundProps} fill={"#f5f5f5"} />
-      <View className="flex-row justify-between items-center pb-4 pt-10 px-4 border-b-[1px] border-b-gray-200 mb-2">
-        <RoundedIcon className="bg-gray-400">
-          <Image className="w-8 h-8" source={LightbrinderHelmet} />
-        </RoundedIcon>
-        <View className="flex-1 items-start ml-2">
-          <Text className="text-2xl font-bold ">Medivia Wiki</Text>
-          <Text className="text-xs font-bold ">
-            Discovery the Medivia secrets
-          </Text>
-        </View>
-        <RoundedIcon className="bg-yellow-600">
-          <Image className="w-8 h-8" source={adventurerBackpack} />
-        </RoundedIcon>
+    /*  <Svg onPress={handleBottomClick} width={width} viewBox={`0 0 ${width} 45`}> */
+    /*   <AnimatedPath animatedProps={backgroundProps} fill={"#f5f5f5"} /> */
+    <View className="flex-row justify-between items-center pb-4 pt-10 px-4 border-b-[1px] border-b-gray-200 mb-2">
+      <RoundedIcon onPress={toggleColorScheme} className="bg-gray-400">
+        <Image className="w-8 h-8" source={LightbrinderHelmet} />
+      </RoundedIcon>
+      <View className="flex-1 items-start ml-2">
+        <Text className="text-2xl font-bold ">Medivia Wiki</Text>
+        <Text className="text-xs font-bold ">
+          Discovery the Medivia secrets
+        </Text>
       </View>
-    </Svg>
+      <RoundedIcon className="bg-yellow-600">
+        <Image className="w-8 h-8" source={adventurerBackpack} />
+      </RoundedIcon>
+    </View>
+    /*   </Svg> */
   );
 }

@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as Clipboard from "expo-clipboard";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 import ManaFluid from "../../assets/ManaFluid.gif";
 import GoldCoin from "../../assets/GoldCoin.gif";
@@ -56,8 +57,6 @@ export function VocationScreen() {
   }, []);
 
   const { statistics } = vocation;
-
-  console.log(statistics);
 
   //#region handlers
 

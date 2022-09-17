@@ -15,7 +15,7 @@ export declare global {
       CityScreen: SharedRouteParam & {
         name: string;
       };
-      MonstersScreen: SharedRouteParam;
+      CreaturesScreen: SharedRouteParam;
     }
   }
 }

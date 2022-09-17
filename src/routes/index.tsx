@@ -6,7 +6,7 @@ import { CityScreen } from "../screens/City";
 import { CitiesScreen } from "../screens/Cities";
 import { Header } from "../components/Header";
 import { WeaponsScreen } from "../screens/Weapons";
-import { MonstersScreen } from "../screens/Monsters";
+import { CreaturesScreen } from "../screens/Creatures";
 
 const Stack = createNativeStackNavigator();
 
@@ -65,13 +65,13 @@ export function Navigation() {
           }}
         />
         <Stack.Screen
-          name="MonstersScreen"
-          component={MonstersScreen}
+          name="CreaturesScreen"
+          component={CreaturesScreen}
           options={{
-            headerShown: false,
             orientation: "portrait",
             presentation: "modal",
             animation: "simple_push",
+            header: () => <Header />,
           }}
         />
       </Stack.Navigator>
