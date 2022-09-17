@@ -1,20 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useMemo, useState } from "react";
-import {
-  ImageBackground,
-  Text,
-  View,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  ToastAndroid,
-} from "react-native";
+import { ImageBackground, Text, View, ScrollView } from "react-native";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import * as Clipboard from "expo-clipboard";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
-
-import ManaFluid from "../../assets/ManaFluid.gif";
-import GoldCoin from "../../assets/GoldCoin.gif";
 
 import { SpellsFilter } from "./components/SpellsFilter";
 
@@ -22,7 +9,7 @@ import { SpellsFilters } from "../../shared/enums/SpellsFilters";
 import { VocationService } from "../../http/vocations";
 import { useVocation } from "../../stores/useVocation";
 import { SharedRouteParam } from "../../global/navigation";
-import { OpacityEffectView } from "../../components/OpacityEffectView";
+import { SpellCard } from "./components/SpellCard";
 
 type ParamList = {
   VocationScreen: SharedRouteParam & {
@@ -59,12 +46,6 @@ export function VocationScreen() {
   const { statistics } = vocation;
 
   //#region handlers
-
-  const handleCopyToClipboard = async (text: string) => {
-    await Clipboard.setStringAsync(text).then(() => {
-      ToastAndroid.show("Incantation copied", ToastAndroid.SHORT);
-    });
-  };
 
   const handlePressedFilter = (filter: SpellsFilters) =>
     setPressedFilter(filter === pressedFilter ? -1 : filter);
@@ -188,47 +169,7 @@ export function VocationScreen() {
             className="mb-12 divide-y divide-gray-200"
           >
             {filteredSpells?.map((spell, index) => (
-              <OpacityEffectView key={spell._id} delay={index * 600}>
-                <TouchableOpacity
-                  onLongPress={() => handleCopyToClipboard(spell.incantation)}
-                  className="h-20 w-full bg-white flex-row"
-                >
-                  <Image
-                    className="w-20 h-20"
-                    source={{ uri: spell.imageUrl }}
-                  />
-                  <View className="flex-1 px-1">
-                    <View>
-                      <Text className="font-semibold text-[16px]">
-                        {spell.incantation}
-                      </Text>
-                      <Text className="font-bold text-xs opacity-70">
-                        {spell.name}
-                      </Text>
-                    </View>
-                    <View className="flex-row items-center">
-                      <View className="flex-1">
-                        <Text className="text-xs opacity-70">
-                          ML {spell.magicLevel}
-                        </Text>
-                      </View>
-                      <View className="flex-1 items-center">
-                        <Image className="w-6 h-6" source={ManaFluid} />
-                        <Text>{spell.manaCost}</Text>
-                      </View>
-                      <View className="flex-1 items-center">
-                        <Image className="w-6 h-6" source={GoldCoin} />
-                        <Text>{spell.price}</Text>
-                      </View>
-                      <View className="flex-1 items-center justify-center">
-                        <Text className="font-bold">
-                          {spell.premium ? "yes" : "Free"}{" "}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              </OpacityEffectView>
+              <SpellCard key={spell._id} {...spell} index={index} />
             ))}
           </ScrollView>
         </View>
