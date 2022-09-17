@@ -29,7 +29,7 @@ export function VocationScreen() {
   const { params } = useRoute<ScreenRouteProp>();
   const { vocation, setVocationDetails } = useVocation();
 
-  const [pressedFilter, setPressedFilter] = useState(SpellsFilters.ML);
+  const [pressedFilter, setPressedFilter] = useState(null);
   const [requestStatus, setRequestStatus] = useState(RequestStatus.Fetching);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export function VocationScreen() {
   //#region handlers
 
   const handlePressedFilter = (filter: SpellsFilters) =>
-    setPressedFilter(filter === pressedFilter ? -1 : filter);
+    setPressedFilter(filter === pressedFilter ? null : filter);
 
   //#endregion handlers
 

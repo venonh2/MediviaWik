@@ -58,10 +58,10 @@ export function Navigation() {
           name="WeaponsScreen"
           component={WeaponsScreen}
           options={{
-            headerShown: false,
             orientation: "portrait",
             presentation: "modal",
             animation: "simple_push",
+            header: () => <Header />,
           }}
         />
         <Stack.Screen

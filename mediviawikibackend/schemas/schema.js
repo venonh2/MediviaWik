@@ -16,6 +16,8 @@ import city from "./city";
 import npc from "./npc";
 import creature from "./creature";
 import creatureType from "./creatureType";
+import weapom from "./weapom";
+import weapomType from "./weapomType";
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -35,6 +37,8 @@ export default createSchema({
     npc,
     creature,
     creatureType,
+    weapom,
+    weapomType,
     // When added to this list, object types can be used as
     // { type: 'typename' } in other document schemas
   ]),
